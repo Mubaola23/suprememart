@@ -3,6 +3,8 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:line_icons/line_icons.dart';
 
+import '../widgets/icon_and_title_card.dart';
+
 class HomeScreen extends StatefulWidget {
   @override
   _HomeScreenState createState() => _HomeScreenState();
@@ -27,11 +29,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Supreme Mart'),
-        actions: [],
-      ),
-      body: Container(
+      body: SingleChildScrollView(
         child: Column(
           children: [
             Padding(
@@ -40,6 +38,8 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             SizedBox(height: 16.0),
             _otherCategories(),
+            SizedBox(height: 16.0),
+            _featuredCollection(),
           ],
         ),
       ),
@@ -121,47 +121,75 @@ class _HomeScreenState extends State<HomeScreen> {
       ],
     );
   }
-}
 
-class IconAndTitleCard extends StatelessWidget {
-  final double width;
-  final double height;
-  final IconData iconData;
-  final String title;
-  final Function onPressed;
+  Widget _featuredCollection() {
+    final orientation = MediaQuery.of(context).orientation;
 
-  const IconAndTitleCard({
-    Key key,
-    this.width = 120.0,
-    this.height = 120.0,
-    this.onPressed,
-    @required this.iconData,
-    @required this.title,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onPressed,
-      child: Container(
-        margin: const EdgeInsets.only(left: 16.0),
-        height: height,
-        width: width,
-        child: Card(
-          elevation: 5,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(iconData, size: 32.0),
-              SizedBox(height: 4.0),
-              Text(
-                title,
-                style: TextStyle(fontSize: 16),
-                textAlign: TextAlign.center,
-              ),
-            ],
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(left: 24.0),
+          child: Text(
+            "Featured Collection",
+            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
         ),
+        const SizedBox(height: 16.0),
+        Container(
+          constraints: BoxConstraints(
+              maxHeight: MediaQuery.of(context).size.height / 1.9),
+          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+          child: GridView.builder(
+            padding: const EdgeInsets.only(bottom: 16.0),
+            itemCount: 9,
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: (orientation == Orientation.portrait) ? 2 : 3,
+              mainAxisSpacing: 16,
+              crossAxisSpacing: 16,
+              childAspectRatio: 0.5,
+            ),
+            itemBuilder: (BuildContext context, int index) {
+              return _featuredItem(index);
+            },
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _featuredItem(int index) {
+    return GestureDetector(
+      onTap: () {},
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Flexible(
+              child: ClipRRect(
+            borderRadius: BorderRadius.circular(8),
+            child: Image.asset(
+              'assets/images/women_medium.jpg',
+              fit: BoxFit.cover,
+            ),
+          )),
+          SizedBox(height: 8.0),
+          Text(
+            '2019 Fashion Men Gyms Pants Joggers Fitness Casual Longs Pants Men Workout Skinny Sweatpants Jogger Tracksuit Cotton Trousers',
+            style: TextStyle(fontWeight: FontWeight.bold),
+            textAlign: TextAlign.center,
+          ),
+          SizedBox(height: 8.0),
+          Text(
+            'Mart Mama',
+            textAlign: TextAlign.center,
+          ),
+          SizedBox(height: 8.0),
+          Text(
+            '\$16.99',
+            style: TextStyle(fontSize: 12),
+            textAlign: TextAlign.center,
+          ),
+        ],
       ),
     );
   }
