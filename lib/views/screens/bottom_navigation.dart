@@ -29,7 +29,24 @@ class _BottomNavigationState extends State<BottomNavigation> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Supreme Mart'),
-        actions: [],
+        actions: [
+          InkWell(
+            onTap: () {},
+            child: Padding(
+              padding: const EdgeInsets.only(right: 16.0),
+              child: Row(
+                children: [
+                  Icon(LineIcons.shopping_cart),
+                  SizedBox(width: 4.0),
+                  Text(
+                    'Cart',
+                    style: TextStyle(fontSize: 18),
+                  ),
+                ],
+              ),
+            ),
+          )
+        ],
       ),
       body: Center(
         child: _widgetOptions.elementAt(_selectedIndex),
