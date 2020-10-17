@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:line_icons/line_icons.dart';
+import 'package:suprememart/views/screens/women_screen.dart';
+
+import 'catalog_screen.dart';
 import 'contact_screen.dart';
+import 'home_screen.dart';
+import 'men_screen.dart';
 
 class BottomNavigation extends StatefulWidget {
   @override
@@ -10,25 +15,12 @@ class BottomNavigation extends StatefulWidget {
 
 class _BottomNavigationState extends State<BottomNavigation> {
   int _selectedIndex = 0;
-  static const TextStyle optionStyle =
-      TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
+
   static List<Widget> _widgetOptions = <Widget>[
-    Text(
-      'Index 0: Home',
-      style: optionStyle,
-    ),
-    Text(
-      'Index 1: Catlog',
-      style: optionStyle,
-    ),
-    Text(
-      'Index 2: Men',
-      style: optionStyle,
-    ),
-    Text(
-      'Index 3: Women',
-      style: optionStyle,
-    ),
+    HomeScreen(),
+    CatalogScreen(),
+    MenScreen(),
+    WomenScreen(),
     ContactScreen(),
   ];
 
@@ -36,7 +28,25 @@ class _BottomNavigationState extends State<BottomNavigation> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Supreme Mart'),
+        title: Text('Supreme Mart'),
+        actions: [
+          InkWell(
+            onTap: () {},
+            child: Padding(
+              padding: const EdgeInsets.only(right: 16.0),
+              child: Row(
+                children: [
+                  Icon(LineIcons.shopping_cart),
+                  SizedBox(width: 4.0),
+                  Text(
+                    'Cart',
+                    style: TextStyle(fontSize: 18),
+                  ),
+                ],
+              ),
+            ),
+          )
+        ],
       ),
       body: Center(
         child: _widgetOptions.elementAt(_selectedIndex),
@@ -64,7 +74,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
                     text: 'Home',
                   ),
                   GButton(
-                    icon: LineIcons.picture_o,
+                    icon: LineIcons.bookmark,
                     text: 'Catalog',
                   ),
                   GButton(
